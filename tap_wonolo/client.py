@@ -155,13 +155,12 @@ class WonoloStream(object):
 
     def sync(self):
         '''Sync data according to Singer spec.'''
-
         current_bookmark_str = singer.bookmarks.get_bookmark(state=self.state,
                                                              tap_stream_id=self.tap_stream_id,
                                                              key=self.bookmark_properties)
 
         if current_bookmark_str is not None:
-            self.params.update({"updated_after": current_bookmark_str})
+            self.params.update({self.api_bookmark_param: current_bookmark_str})
             current_bookmark_dt = singer.utils.strptime_to_utc(current_bookmark_str)
         else:
             current_bookmark_dt = None
@@ -196,6 +195,7 @@ class JobsStream(WonoloStream):
     tap_stream_id = 'jobs'
     key_properties = ["id"]
     bookmark_properties = "updated_at"
+    api_bookmark_param = "updated_after"
     replication_method = 'incremental'
     valid_params = {
         "state",
@@ -213,6 +213,7 @@ class JobRequestsStream(WonoloStream):
     tap_stream_id = 'job_requests'
     key_properties = ["id"]
     bookmark_properties = "updated_at"
+    api_bookmark_param = "updated_after"
     replication_method = 'incremental'
     valid_params = {
         "state",
@@ -231,6 +232,7 @@ class UsersStream(WonoloStream):
     tap_stream_id = 'users'
     key_properties = ["id"]
     bookmark_properties = "updated_at"
+    api_bookmark_param = "updated_after"
     replication_method = 'incremental'
     valid_params = {
         "type",
