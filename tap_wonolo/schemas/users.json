@@ -1,0 +1,94 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": ["null", "integer"]
+    },
+    "updated_at": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "customer_id": {
+      "type": ["null", "integer"]
+    },
+    "role": {
+      "type": ["null", "string"]
+    },
+    "synced_worker_id": {
+      "type": ["null", "integer"]
+    },
+    "last_name": {
+      "type": ["null", "string"]
+    },
+    "first_name": {
+      "type": ["null", "string"]
+    },
+    "email": {
+      "type": ["null", "string"]
+    },
+    "type": {
+      "type": ["null", "string"]
+    },
+    "gender": {
+      "type": ["null", "string"]
+    },
+    "avatar_url": {
+      "type": ["null", "string"]
+    },
+    "address": {
+      "type": ["null", "string"]
+    },
+    "city": {
+      "type": ["null", "string"]
+    },
+    "address_state": {
+      "type": ["null", "string"]
+    },
+    "zip": {
+      "type": ["null", "string"]
+    },
+    "phone": {
+      "type": ["null", "string"]
+    },
+    "suspended": {
+      "type": ["null", "boolean"]
+    },
+    "suspended_at": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "rating": {
+      "type": ["null", "number"]
+    },
+    "agreed_to_terms": {
+      "type": ["null", "boolean"]
+    },
+    "agreed_to_terms_date": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "external_id": {
+      "type": ["null", "string"]
+    },
+    "onboarding_last_state": {
+      "type": ["null", "string"]
+    },
+    "w2_employee_id": {
+      "type": ["null", "string"]
+    },
+    "drug_tested": {
+      "type": ["null", "string"]
+    },
+    "verified_phone": {
+      "type": ["null", "string"]
+    },
+    "phone_verified_at": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "title": {
+      "type": ["null", "string"]
+    }
+  }
+}
