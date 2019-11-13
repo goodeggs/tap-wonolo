@@ -100,7 +100,7 @@
     "preferred_wonoloers_info": {
       "type": ["null", "array"],
       "items": {
-        "type": ["null", "string"]
+        "type": ["null", "integer"]
       }
     },
     "classification": {
@@ -115,11 +115,11 @@
     "ban_list": {
       "type": ["null", "array"],
       "items": {
-        "type": ["null", "string"]
+        "type": ["null", "integer"]
       }
     },
     "push_all_notifications_asap": {
-      "type": ["null", "string"]
+      "type": ["null", "boolean"]
     },
     "cached_job_states": {
       "type": ["null", "object"],
