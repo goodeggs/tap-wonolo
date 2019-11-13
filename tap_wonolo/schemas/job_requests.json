@@ -1,0 +1,156 @@
+{
+  "type": ["null", "object"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": ["null", "integer"]
+    },
+    "state": {
+      "type": ["null", "string"]
+    },
+    "category": {
+      "type": ["null", "string"]
+    },
+    "wage": {
+      "type": ["null", "number"]
+    },
+    "slots": {
+      "type": ["null", "number"]
+    },
+    "latitude": {
+      "type": ["null", "number"]
+    },
+    "longitude": {
+      "type": ["null", "number"]
+    },
+    "start_time": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "flag_color": {
+      "type": ["null", "string"]
+    },
+    "duration": {
+      "type": ["null", "number"]
+    },
+    "venue": {
+      "type": ["null", "string"]
+    },
+    "address": {
+      "type": ["null", "string"]
+    },
+    "city": {
+      "type": ["null", "string"]
+    },
+    "zip": {
+      "type": ["null", "string"]
+    },
+    "postal_code": {
+      "type": ["null", "string"]
+    },
+    "country": {
+      "type": ["null", "string"]
+    },
+    "updated_at": {
+      "type": ["null", "string"],
+      "format": "date-time"
+    },
+    "description": {
+      "type": ["null", "string"]
+    },
+    "description_tasks": {
+      "type": ["null", "string"]
+    },
+    "description_company": {
+      "type": ["null", "string"]
+    },
+    "description_travel": {
+      "type": ["null", "string"]
+    },
+    "description_skills": {
+      "type": ["null", "string"]
+    },
+    "description_contact": {
+      "type": ["null", "string"]
+    },
+    "description_arrival": {
+      "type": ["null", "string"]
+    },
+    "employer_id": {
+      "type": ["null", "integer"]
+    },
+    "company_id": {
+      "type": ["null", "integer"]
+    },
+    "request_name": {
+      "type": ["null", "string"]
+    },
+    "multi_day": {
+      "type": ["null", "boolean"]
+    },
+    "multi_day_job_request_id": {
+      "type": ["null", "integer"]
+    },
+    "preferred_candidate_ids": {
+      "type": ["null", "array"],
+      "items": {
+        "type": ["null", "string"]
+      }
+    },
+    "preferred_wonoloers_info": {
+      "type": ["null", "array"],
+      "items": {
+        "type": ["null", "integer"]
+      }
+    },
+    "classification": {
+      "type": ["null", "string"]
+    },
+    "w2_hourly_rate": {
+      "type": ["null", "string"]
+    },
+    "notification_distance": {
+      "type": ["null", "number"]
+    },
+    "ban_list": {
+      "type": ["null", "array"],
+      "items": {
+        "type": ["null", "integer"]
+      }
+    },
+    "push_all_notifications_asap": {
+      "type": ["null", "boolean"]
+    },
+    "cached_job_states": {
+      "type": ["null", "object"],
+      "additionalProperties": true
+    },
+    "in_white_gloves_period": {
+      "type": ["null", "boolean"]
+    },
+    "can": {
+      "type": ["null", "string"]
+    },
+    "agent_code": {
+      "type": ["null", "string"]
+    },
+    "organizational_path": {
+      "type": ["null", "string"]
+    },
+    "timezone": {
+      "type": ["null", "string"]
+    },
+    "re_ranked_worker_ids": {
+      "type": ["null", "string"]
+    },
+    "use_pending_state": {
+      "type": ["null", "boolean"]
+    },
+    "badge_requirements": {
+      "type": ["null", "array"],
+      "items": {
+        "type": ["null", "string"]
+      }
+    }
+  }
+}
