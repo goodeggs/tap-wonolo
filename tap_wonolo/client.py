@@ -37,7 +37,9 @@ class WonoloStream(object):
         if self.tap_stream_id is not None:
             self.schema = self._load_schema()
 
-        if self.config.get("streams") is not None:
+        if self.config.get("streams") is None:
+            self.params = {}
+        else:
             self.params = self.config.get("streams", {}).get(self.tap_stream_id, {})
             if not isinstance(self.params, dict):
                 raise TypeError("Stream parameters must be supplied as JSON.")
@@ -114,6 +116,8 @@ class WonoloStream(object):
         to save a new auth token and auth token expiration date
         to the exitsing config file.
         '''
+        self.auth_token = auth_response.get("token")
+        self.auth_token_expires_at = auth_response.get("expires_at")
         self.config["auth_token"] = auth_response.get("token")
         self.config["auth_token_expires_at"] = auth_response.get("expires_at")
         LOGGER.info('Generating new config..')
@@ -136,7 +140,7 @@ class WonoloStream(object):
     def _yield_records(self, entity: str, params: Dict = None) -> Dict:
         '''Yeild individual records for a given entity.'''
         self._check_auth_token()
-        self.params.update({
+        params.update({
             "token": self.auth_token,
             "page": 1,
             "per": 50
@@ -196,7 +200,7 @@ class JobsStream(WonoloStream):
     key_properties = ["id"]
     bookmark_properties = "updated_at"
     api_bookmark_param = "updated_after"
-    replication_method = 'incremental'
+    replication_method = 'INCREMENTAL'
     valid_params = {
         "state",
         "job_request_id",
@@ -214,7 +218,7 @@ class JobRequestsStream(WonoloStream):
     key_properties = ["id"]
     bookmark_properties = "updated_at"
     api_bookmark_param = "updated_after"
-    replication_method = 'incremental'
+    replication_method = 'INCREMENTAL'
     valid_params = {
         "state",
         "company_id",
@@ -233,7 +237,7 @@ class UsersStream(WonoloStream):
     key_properties = ["id"]
     bookmark_properties = "updated_at"
     api_bookmark_param = "updated_after"
-    replication_method = 'incremental'
+    replication_method = 'INCREMENTAL'
     valid_params = {
         "type",
         "email",

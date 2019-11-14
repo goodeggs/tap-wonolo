@@ -94,7 +94,7 @@
     "preferred_candidate_ids": {
       "type": ["null", "array"],
       "items": {
-        "type": ["null", "string"]
+        "type": ["null", "integer"]
       }
     },
     "preferred_wonoloers_info": {
@@ -149,7 +149,7 @@
     "badge_requirements": {
       "type": ["null", "array"],
       "items": {
-        "type": ["null", "string"]
+        "type": ["null", "integer"]
       }
     }
   }

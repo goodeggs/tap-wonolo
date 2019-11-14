@@ -5,7 +5,7 @@ isort:
 	isort --recursive
 
 flake8:
-	flake8 . --ignore=E501 --count --statistics
+	flake8 . --ignore=E501,E722 --count --statistics
 
 run-tap:
 	@echo "Running Wonolo tap.."
