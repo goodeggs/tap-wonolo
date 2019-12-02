@@ -1,10 +1,8 @@
 import json
-import logging
 import os
 
 import rollbar
 import singer
-from rollbar.logger import RollbarHandler
 
 from .client import JobRequestsStream, JobsStream, UsersStream
 
@@ -17,12 +15,9 @@ AVAILABLE_STREAMS = {
 ROLLBAR_ACCESS_TOKEN = os.environ["ROLLBAR_ACCESS_TOKEN"]
 ROLLBAR_ENVIRONMENT = os.environ["ROLLBAR_ENVIRONMENT"]
 
-LOGGER = singer.get_logger()
-
 rollbar.init(ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENVIRONMENT)
-rollbar_handler = RollbarHandler()
-rollbar_handler.setLevel(logging.WARNING)
-LOGGER.addHandler(rollbar_handler)
+
+LOGGER = singer.get_logger()
 
 REQUIRED_CONFIG_KEYS = [
     "api_key",
@@ -81,11 +76,13 @@ def main():
             discover(args, select_all=True)
         except:
             LOGGER.exception('Caught exception during Discovery..')
+            rollbar.report_exc_info()
     else:
         try:
             sync(args)
         except:
             LOGGER.exception('Caught exception during Sync..')
+            rollbar.report_exc_info()
 
 
 if __name__ == "__main__":
