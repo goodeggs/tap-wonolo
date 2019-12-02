@@ -2,7 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/tap-wonolo.svg)](https://badge.fury.io/py/tap-wonolo)
 ![PyPI - Status](https://img.shields.io/pypi/status/tap-wonolo)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7-blue.svg)](https://pypi.python.org/pypi/ansicolortags/)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tap-wonolo)
 ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/pypi/tap-wonolo)
 [![Build Status](https://travis-ci.com/goodeggs/tap-wonolo.svg?branch=master)](https://travis-ci.com/goodeggs/tap-wonolo.svg?branch=master)
 ![GitHub last commit](https://img.shields.io/github/last-commit/goodeggs/tap-wonolo)
