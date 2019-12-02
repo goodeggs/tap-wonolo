@@ -1,10 +1,10 @@
 # tap-wonolo
 [![PyPI version](https://badge.fury.io/py/tap-wonolo.svg)](https://badge.fury.io/py/tap-wonolo)
 ![PyPI - Status](https://img.shields.io/pypi/status/tap-wonolo)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tap-wonolo)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/pypi/tap-wonolo)
 [![Build Status](https://travis-ci.com/goodeggs/tap-wonolo.svg?branch=master)](https://travis-ci.com/goodeggs/tap-wonolo.svg?branch=master)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tap-wonolo)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/pypi/tap-wonolo)
 ![GitHub last commit](https://img.shields.io/github/last-commit/goodeggs/tap-wonolo)
 
 A [Singer](https://www.singer.io/) tap for extracting data from the [Wonolo REST API v2](https://wonolo.readme.io/docs/getting-started).
