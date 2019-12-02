@@ -27,6 +27,7 @@ setuptools.setup(
         'Topic :: Software Development',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
+        'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7'
