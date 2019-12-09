@@ -40,10 +40,11 @@ setuptools.setup(
         'tap_wonolo': ['schemas/*.json']
     },
     install_requires=[
-        'requests==2.22.0',
-        'attrs==19.3.0',
+        'requests>=2.22.0',
+        'attrs>=19.3.0',
         'singer-python==5.8.1',
-        'rollbar==0.14.7'
+        'backoff==1.8.0',
+        'rollbar>=0.14.7'
     ],
     python_requires='>=3.6',
     entry_points={

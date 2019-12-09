@@ -4,12 +4,20 @@ from datetime import datetime
 from typing import Dict
 
 import attr
+import backoff
 import requests
 import singer
 
 from .version import __version__
 
 LOGGER = singer.get_logger()
+
+
+def is_fatal_code(e: requests.exceptions.RequestException) -> bool:
+    '''Helper function to determine if a Requests reponse status code
+    is a "fatal" status code. If it is, the backoff decorator will giveup
+    instead of attemtping to backoff.'''
+    return 400 <= e.response.status_code < 500
 
 
 @attr.s
@@ -80,6 +88,11 @@ class WonoloStream(object):
         headers["Date"] = singer.utils.strftime(singer.utils.now(), '%a, %d %b %Y %H:%M:%S %Z')
         return headers
 
+    @backoff.on_exception(backoff.fibo,
+                          requests.exceptions.RequestException,
+                          max_time=120,
+                          giveup=is_fatal_code,
+                          logger=LOGGER)
     def _get(self, endpoint: str, params: Dict = None) -> Dict:
         '''Constructs a standard way of making
         a GET request to the Wonolo REST API.
