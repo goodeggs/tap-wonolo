@@ -100,6 +100,7 @@ class WonoloStream(object):
         url = self.base_url + endpoint
         headers = self._construct_headers()
         response = requests.get(url, headers=headers, params=params)
+        print(response)
         response.raise_for_status()
         return response.json()
 
