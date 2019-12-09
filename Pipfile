@@ -9,6 +9,7 @@ name = "pypi"
 tap-wonolo = {path = ".", editable = true}
 isort = "*"
 flake8 = "*"
+mypy = "*"
 pytest = "*"
 tox = "*"
 
