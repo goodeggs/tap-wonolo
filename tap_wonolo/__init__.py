@@ -23,11 +23,12 @@ LOGGER = singer.get_logger()
 try:
     ROLLBAR_ACCESS_TOKEN = os.environ["ROLLBAR_ACCESS_TOKEN"]
     ROLLBAR_ENVIRONMENT = os.environ["ROLLBAR_ENVIRONMENT"]
-    rollbar.init(ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENVIRONMENT)
-    log_to_rollbar = True
 except KeyError:
     LOGGER.info("No Rollbar environment variables found. Rollbar logging disabled..")
     log_to_rollbar = False
+else:
+    rollbar.init(ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENVIRONMENT)
+    log_to_rollbar = True
 
 
 def discover(args, select_all=False):
