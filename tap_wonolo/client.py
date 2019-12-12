@@ -90,9 +90,13 @@ class WonoloStream(object):
         return headers
 
     @backoff.on_exception(backoff.fibo,
-                          requests.exceptions.RequestException,
+                          requests.exceptions.HTTPError,
                           max_time=120,
                           giveup=is_fatal_code,
+                          logger=LOGGER)
+    @backoff.on_exception(backoff.fibo,
+                          requests.exceptions.RequestException,
+                          max_time=120,
                           logger=LOGGER)
     def _get(self, endpoint: str, params: Dict = None) -> Dict:
         '''Constructs a standard way of making

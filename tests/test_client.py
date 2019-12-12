@@ -9,7 +9,7 @@ from tap_wonolo.client import is_fatal_code
                                          pytest.param(502, marks=pytest.mark.xfail),
                                          pytest.param(503, marks=pytest.mark.xfail),
                                          pytest.param(504, marks=pytest.mark.xfail)])
-def test_is_fatal_code_true(status_code):
+def test_is_fatal_code(status_code):
     resp = requests.models.Response()
     resp.status_code = status_code
     exc = requests.exceptions.RequestException(response=resp)
