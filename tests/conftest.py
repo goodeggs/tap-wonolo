@@ -3,43 +3,37 @@ import json
 
 import pytest
 
-from tap_wonolo.client import WonoloStream
-
-CONFIG_PATH = 'tests/data/test.config.json'
-STATE_PATH = 'tests/data/test.state.json'
+from tap_wonolo.client import JobRequestsStream, JobsStream, UsersStream
 
 
-@pytest.fixture(scope='session')
-def config():
-    with open(CONFIG_PATH) as f:
+@pytest.fixture(scope='function')
+def config(shared_datadir):
+    with open(shared_datadir / 'test.config.json') as f:
         return json.load(f)
 
 
-@pytest.fixture(scope='session')
-def state():
-    with open(STATE_PATH) as f:
+@pytest.fixture(scope='function')
+def state(shared_datadir):
+    with open(shared_datadir / 'test.state.json') as f:
         return json.load(f)
 
 
-@pytest.fixture(scope='session')
-def args(config, state):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--config')
-    parser.add_argument('--state')
-    args = parser.parse_args()
-    args.config = config
-    setattr(args, 'config_path', CONFIG_PATH)
-    args.state = state
-    setattr(args, 'state_path', STATE_PATH)
+@pytest.fixture(scope='function')
+def args(config, state, shared_datadir):
+    args = argparse.Namespace()
+    setattr(args, 'config', config)
+    setattr(args, 'state', state)
+    setattr(args, 'config_path', shared_datadir / 'test.config.json')
+    setattr(args, 'state_path', shared_datadir / 'test.state.json')
     return args
 
 
-@pytest.fixture(scope='session')
-def client(config, state):
-    return WonoloStream(api_key=config.get("api_key"),
-                        secret_key=config.get("secret_key"),
-                        api_version=config.get("api_version"),
-                        environment=config.get("environment"),
-                        config=config,
-                        config_path=CONFIG_PATH,
-                        state=state)
+@pytest.fixture(scope='function', params={JobsStream, JobRequestsStream, UsersStream})
+def client(config, state, shared_datadir, request):
+    return request.param(api_key=config.get("api_key"),
+                         secret_key=config.get("secret_key"),
+                         api_version=config.get("api_version"),
+                         environment=config.get("environment"),
+                         config=config,
+                         config_path=shared_datadir / 'test.config.json',
+                         state=state)
