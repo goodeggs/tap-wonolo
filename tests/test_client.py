@@ -1,6 +1,7 @@
 import pytest
 import requests
 import responses
+from singer.schema import Schema
 
 from tap_wonolo.client import is_fatal_code
 
@@ -29,7 +30,9 @@ def test_client_from_args_class_method(client, args, config, state, shared_datad
 
 
 def test_load_schema(client):
-    assert isinstance(client._load_schema(), dict)
+    schema = client._load_schema()
+    assert isinstance(schema, dict)
+    assert Schema.from_dict(schema)
 
 
 def test_get_successful(client):
