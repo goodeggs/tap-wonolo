@@ -1,0 +1,6 @@
+{
+    "api_key": "foo",
+    "secret_key": "bar",
+    "api_version": "v2",
+    "environment": "test"
+}

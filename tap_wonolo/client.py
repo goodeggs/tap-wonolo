@@ -1,9 +1,10 @@
 import json
 import os
 from datetime import datetime
-from typing import Dict
+from typing import Dict, Generator, List, Optional, Set
 
 import attr
+import backoff
 import requests
 import singer
 
@@ -12,8 +13,16 @@ from .version import __version__
 LOGGER = singer.get_logger()
 
 
+def is_fatal_code(e: requests.exceptions.RequestException) -> bool:
+    '''Helper function to determine if a Requests reponse status code
+    is a "fatal" status code. If it is, the backoff decorator will giveup
+    instead of attemtping to backoff.'''
+    return 400 <= e.response.status_code < 500 and e.response.status_code != 429
+
+
 @attr.s
 class WonoloStream(object):
+    tap_stream_id: Optional[str] = None
 
     api_key: str = attr.ib()
     secret_key: str = attr.ib()
@@ -23,8 +32,8 @@ class WonoloStream(object):
     state: Dict = attr.ib()
     base_url: str = attr.ib(init=False)
     schema: Dict = attr.ib(init=False)
-    auth_token: str = attr.ib(repr=False, default=None)
-    auth_token_expires_at: str = attr.ib(default=None)
+    auth_token: Optional[str] = attr.ib(repr=False, default=None)
+    auth_token_expires_at: Optional[str] = attr.ib(default=None)
     api_version: str = attr.ib(default="v2", validator=attr.validators.instance_of(str))
     params: Dict = attr.ib(init=False, default=None)
 
@@ -80,6 +89,16 @@ class WonoloStream(object):
         headers["Date"] = singer.utils.strftime(singer.utils.now(), '%a, %d %b %Y %H:%M:%S %Z')
         return headers
 
+    @backoff.on_exception(backoff.fibo,
+                          requests.exceptions.HTTPError,
+                          max_time=120,
+                          giveup=is_fatal_code,
+                          logger=LOGGER)
+    @backoff.on_exception(backoff.fibo,
+                          (requests.exceptions.ConnectionError,
+                           requests.exceptions.Timeout),
+                          max_time=120,
+                          logger=LOGGER)
     def _get(self, endpoint: str, params: Dict = None) -> Dict:
         '''Constructs a standard way of making
         a GET request to the Wonolo REST API.
@@ -137,9 +156,11 @@ class WonoloStream(object):
         else:
             LOGGER.info("Using existing auth token..")
 
-    def _yield_records(self, entity: str, params: Dict = None) -> Dict:
+    def _yield_records(self, entity: str, params: Optional[Dict] = None) -> Generator[Dict, None, None]:
         '''Yeild individual records for a given entity.'''
         self._check_auth_token()
+        if params is None:
+            params = {}
         params.update({
             "token": self.auth_token,
             "page": 1,
@@ -196,12 +217,12 @@ class WonoloStream(object):
 
 @attr.s
 class JobsStream(WonoloStream):
-    tap_stream_id = 'jobs'
-    key_properties = ["id"]
-    bookmark_properties = "updated_at"
-    api_bookmark_param = "updated_after"
-    replication_method = 'INCREMENTAL'
-    valid_params = {
+    tap_stream_id: str = 'jobs'
+    key_properties: List[str] = ["id"]
+    bookmark_properties: str = "updated_at"
+    api_bookmark_param: str = "updated_after"
+    replication_method: str = 'INCREMENTAL'
+    valid_params: Set[str] = {
         "state",
         "job_request_id",
         "classification",
@@ -214,12 +235,12 @@ class JobsStream(WonoloStream):
 
 @attr.s
 class JobRequestsStream(WonoloStream):
-    tap_stream_id = 'job_requests'
-    key_properties = ["id"]
-    bookmark_properties = "updated_at"
-    api_bookmark_param = "updated_after"
-    replication_method = 'INCREMENTAL'
-    valid_params = {
+    tap_stream_id: str = 'job_requests'
+    key_properties: List[str] = ["id"]
+    bookmark_properties: str = "updated_at"
+    api_bookmark_param: str = "updated_after"
+    replication_method: str = 'INCREMENTAL'
+    valid_params: Set[str] = {
         "state",
         "company_id",
         "multi_day_job_request_id",
@@ -233,12 +254,12 @@ class JobRequestsStream(WonoloStream):
 
 @attr.s
 class UsersStream(WonoloStream):
-    tap_stream_id = 'users'
-    key_properties = ["id"]
-    bookmark_properties = "updated_at"
-    api_bookmark_param = "updated_after"
-    replication_method = 'INCREMENTAL'
-    valid_params = {
+    tap_stream_id: str = 'users'
+    key_properties: List[str] = ["id"]
+    bookmark_properties: str = "updated_at"
+    api_bookmark_param: str = "updated_after"
+    replication_method: str = 'INCREMENTAL'
+    valid_params: Set[str] = {
         "type",
         "email",
         "first_name",

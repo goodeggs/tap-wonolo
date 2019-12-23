@@ -12,18 +12,23 @@ AVAILABLE_STREAMS = {
     UsersStream
 }
 
-ROLLBAR_ACCESS_TOKEN = os.environ["ROLLBAR_ACCESS_TOKEN"]
-ROLLBAR_ENVIRONMENT = os.environ["ROLLBAR_ENVIRONMENT"]
-
-rollbar.init(ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENVIRONMENT)
-
-LOGGER = singer.get_logger()
-
 REQUIRED_CONFIG_KEYS = [
     "api_key",
     "secret_key",
     "environment"
 ]
+
+LOGGER = singer.get_logger()
+
+try:
+    ROLLBAR_ACCESS_TOKEN = os.environ["ROLLBAR_ACCESS_TOKEN"]
+    ROLLBAR_ENVIRONMENT = os.environ["ROLLBAR_ENVIRONMENT"]
+except KeyError:
+    LOGGER.info("No Rollbar environment variables found. Rollbar logging disabled..")
+    log_to_rollbar = False
+else:
+    rollbar.init(ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENVIRONMENT)
+    log_to_rollbar = True
 
 
 def discover(args, select_all=False):
@@ -76,13 +81,15 @@ def main():
             discover(args, select_all=True)
         except:
             LOGGER.exception('Caught exception during Discovery..')
-            rollbar.report_exc_info()
+            if log_to_rollbar is True:
+                rollbar.report_exc_info()
     else:
         try:
             sync(args)
         except:
             LOGGER.exception('Caught exception during Sync..')
-            rollbar.report_exc_info()
+            if log_to_rollbar is True:
+                rollbar.report_exc_info()
 
 
 if __name__ == "__main__":
