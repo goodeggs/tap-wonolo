@@ -74,22 +74,23 @@ def sync(args):
             stream.write_state_message()
 
 
-def main():
+def main_impl():
     args = singer.parse_args(required_config_keys=REQUIRED_CONFIG_KEYS)
     if args.discover:
-        try:
-            discover(args, select_all=True)
-        except:
-            LOGGER.exception('Caught exception during Discovery..')
-            if log_to_rollbar is True:
-                rollbar.report_exc_info()
+        discover(args, select_all=True)
     else:
-        try:
-            sync(args)
-        except:
-            LOGGER.exception('Caught exception during Sync..')
-            if log_to_rollbar is True:
-                rollbar.report_exc_info()
+        sync(args)
+
+
+def main():
+    try:
+        main_impl()
+    except Exception as exc:
+        if log_to_rollbar is True:
+            LOGGER.info("Reporting exception info to Rollbar..")
+            rollbar.report_exc_info()
+        LOGGER.critical(exc)
+        raise
 
 
 if __name__ == "__main__":
