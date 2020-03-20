@@ -149,7 +149,35 @@
     "badge_requirements": {
       "type": ["null", "array"],
       "items": {
-        "type": ["null", "integer"]
+        "type": ["null", "object"],
+        "properties": {
+          "id": {
+              "type": ["null", "integer"]
+          },
+          "badge_id": {
+            "type": ["null", "integer"]
+          },
+          "created_at": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          },
+          "job_request_id": {
+            "type": ["null", "integer"]
+          },
+          "badge_name": {
+            "type": ["null", "string"]
+          },
+          "badge_icon_url": {
+            "type": ["null", "string"]
+          },
+          "badge_description": {
+            "type": ["null", "string"]
+          }
+        }
       }
     }
   }
